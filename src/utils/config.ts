@@ -1,3 +1,6 @@
+export const TEST_MODE = true; // uses testmode for pretix and sepolia for wallet connections
+export const WALLET_RECIPIENT = "0x8289432ACD5EB0214B1C2526A5EDB480Aa06A9ab";
+
 // Default App Configuration
 export const APP_EMOJI = "🎟️";
 export const APP_NAME = "Pretix";
