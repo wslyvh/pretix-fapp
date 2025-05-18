@@ -7,10 +7,11 @@ import {
   useWaitForTransactionReceipt,
 } from "wagmi";
 import { WALLET_RECIPIENT } from "@/utils/config";
-import { parseEther, size } from "viem/utils";
+import { parseEther } from "viem/utils";
 import { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import { QRCodeSVG } from "qrcode.react";
+import { DateInfoCard } from "./dateInfo";
+import { LocationInfoCard } from "./locationInfo";
 
 interface Props {
   event: any;
@@ -86,14 +87,15 @@ export function Event({ event, items }: Props) {
     <div className="flex flex-col gap-2">
       <h2 className="text-2xl font-bold">{event.name.en}</h2>
 
-      <p className="text-sm text-base-content/60">
-        {dayjs(event.date_from).format("DD/MM/YYYY")} -{" "}
-        {dayjs(event.date_to).format("DD/MM/YYYY")}
-      </p>
+      <div className="flex flex-col sm:flex-row gap-2">
+        <DateInfoCard
+          date_from={event.date_from}
+          date_to={event.date_to}
+          className="my-2"
+        />
 
-      <p className="text-sm text-base-content/80">{event.location.en}</p>
-
-      <hr className="my-4" />
+        <LocationInfoCard location={event.location.en} className="my-2" />
+      </div>
 
       {!isConnected && (
         <div role="alert" className="alert">
