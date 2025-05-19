@@ -2,10 +2,7 @@ import { PropsWithChildren } from "react";
 import { Metadata, Viewport } from "next";
 import {
   APP_DESCRIPTION,
-  APP_FRAME_VERSION,
-  APP_IMAGE,
   APP_NAME,
-  APP_OG_IMAGE,
   APP_URL,
   SOCIAL_TWITTER,
 } from "@/utils/config";
@@ -27,21 +24,21 @@ export const metadata: Metadata = {
     siteName: APP_NAME,
     description: APP_DESCRIPTION,
     url: APP_URL,
-    images: APP_OG_IMAGE,
+    images: "/og.png",
   },
   twitter: {
     card: "summary_large_image",
     site: SOCIAL_TWITTER,
     title: APP_NAME,
     description: APP_DESCRIPTION,
-    images: APP_OG_IMAGE,
+    images: "/og.png",
   },
   other: {
     "fc:frame": JSON.stringify({
-      version: APP_FRAME_VERSION,
-      imageUrl: APP_IMAGE,
+      version: "next",
+      imageUrl: `${APP_URL}/image.png`,
       button: {
-        title: APP_NAME,
+        title: `Launch ${APP_NAME}`,
         action: {
           type: "launch_frame",
           name: APP_NAME,
