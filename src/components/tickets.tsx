@@ -10,6 +10,7 @@ import { WALLET_RECIPIENT } from "@/utils/config";
 import { parseEther } from "viem/utils";
 import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import { useFarcasterAccount } from "@/hooks/useFarcasterAccount";
 
 interface Props {
   eventId: string;
@@ -17,7 +18,8 @@ interface Props {
 }
 
 export function Tickets({ eventId, items }: Props) {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
+  const { data: account } = useFarcasterAccount();
   const { connect, connectors } = useConnect();
   const { sendTransaction, isPending, data: hash } = useSendTransaction();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -28,7 +30,9 @@ export function Tickets({ eventId, items }: Props) {
     items?.length === 1 ? items[0] : null
   );
   const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
   const [ticket, setTicket] = useState<any>(null);
+  const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
     const ticket = localStorage.getItem("ticket");
@@ -66,7 +70,12 @@ export function Tickets({ eventId, items }: Props) {
 
     const response = await fetch("/api/order", {
       method: "POST",
-      body: JSON.stringify({ eventId, itemId: selectedItem.id, hash }),
+      body: JSON.stringify({
+        eventId,
+        itemId: selectedItem.id,
+        hash,
+        displayName: account?.displayName ?? account?.username ?? address,
+      }),
     });
 
     const data = await response.json();
@@ -222,20 +231,48 @@ export function Tickets({ eventId, items }: Props) {
                 isConfirmed
               }
             >
-              {isPending
+              {!selectedItem
+                ? "Select a ticket"
+                : isPending
                 ? "Sending transaction..."
-                : `Buy ${selectedItem.name.en}`}
+                : `Buy ${selectedItem?.name.en}`}
             </button>
           )}
 
           {ticket && (
-            <a
-              className="btn btn-primary btn-full"
-              href={`/api/order?eventId=${eventId}&code=${ticket.code}`}
-              target="_blank"
-            >
-              Download ticket
-            </a>
+            <div className="flex flex-col gap-2">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input w-full"
+              />
+              <button
+                className="btn btn-primary btn-full"
+                disabled={!email || emailSent}
+                onClick={async () => {
+                  const response = await fetch(`/api/order`, {
+                    method: "PUT",
+                    body: JSON.stringify({
+                      eventId,
+                      code: ticket.code,
+                      email: email,
+                    }),
+                  });
+
+                  if (response.ok) {
+                    setEmailSent(true);
+                    setError("");
+                  } else {
+                    setEmailSent(false);
+                    setError("Failed to send email. Please try again.");
+                  }
+                }}
+              >
+                {emailSent ? "Email sent" : "Send ticket"}
+              </button>
+            </div>
           )}
         </div>
       </div>

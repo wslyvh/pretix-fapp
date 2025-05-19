@@ -138,6 +138,7 @@ export async function createOrder(
   eventId: string,
   itemId: number,
   address?: string,
+  displayName?: string,
   queryParams?: Record<string, string | number | boolean>
 ) {
   const config = initConfig();
@@ -149,7 +150,7 @@ export async function createOrder(
     headers: headers(),
     method: "POST",
     body: JSON.stringify({
-      // email: '', // update with attendee info after purchase ?
+      // email: '', //  updated after purchase
       locale: "en",
       status: "p", // 'p' = paid, 'n' = pending
       testmode: TEST_MODE,
@@ -157,9 +158,12 @@ export async function createOrder(
       positions: [
         {
           item: itemId,
-          attendee_name: address,
+          attendee_name: displayName,
         },
       ],
+      invoice_address: {
+        name: address,
+      },
     }),
   });
 
@@ -167,6 +171,33 @@ export async function createOrder(
     const errorText = await response.text();
     throw new Error(
       `Failed to create order: ${response.status}, body: ${errorText}`
+    );
+  }
+
+  return response.json();
+}
+
+export async function updateOrder(
+  eventId: string,
+  orderCode: string,
+  data: Record<string, string | number | boolean>,
+  queryParams?: Record<string, string | number | boolean>
+) {
+  console.log("updateOrder", eventId, orderCode, data);
+  const config = initConfig();
+  const baseUrl = `${config.apiUrl}/organizers/${config.organizer}/events/${eventId}/orders/${orderCode}/`;
+  const url = buildQueryUrl(baseUrl, queryParams);
+
+  const response = await fetch(url, {
+    headers: headers(),
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(
+      `Failed to update order: ${response.status}, body: ${errorText}`
     );
   }
 

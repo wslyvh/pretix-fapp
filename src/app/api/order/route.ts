@@ -1,5 +1,10 @@
 import { createPublicClient, http } from "viem";
-import { createOrder, getTicketData, getTicketPdf } from "@/clients/pretix";
+import {
+  createOrder,
+  getTicketData,
+  getTicketPdf,
+  updateOrder,
+} from "@/clients/pretix";
 import { config } from "@/utils/wagmi";
 import { WALLET_RECIPIENT } from "@/utils/config";
 
@@ -27,7 +32,6 @@ export async function GET(req: Request) {
   // TODO: Validate the order // access
   const pdf = await getTicketPdf(eventId, code);
 
-  console.log("Sending PDF");
   return new Response(pdf, {
     status: 200,
     headers: {
@@ -38,10 +42,34 @@ export async function GET(req: Request) {
   });
 }
 
+export async function PUT(req: Request) {
+  const { eventId, code, email } = await req.json();
+  console.log("[PUT] Update Order", eventId, code, email);
+
+  if (!eventId || !code || !email) {
+    return new Response(
+      JSON.stringify({ error: "Missing required parameters" }),
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  const order = await updateOrder(eventId, code, {
+    email: email,
+  });
+
+  return new Response(JSON.stringify(order), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export async function POST(req: Request) {
   try {
-    const { eventId, itemId, hash } = await req.json();
-    console.log("[POST] Create Order", eventId, itemId, hash);
+    const { eventId, itemId, hash, displayName } = await req.json();
+    console.log("[POST] Create Order", eventId, itemId, hash, displayName);
 
     if (!eventId || !itemId || !hash) {
       console.error("Missing required parameters", eventId, itemId, hash);
@@ -80,7 +108,12 @@ export async function POST(req: Request) {
     // 2. Verify the transaction amount matches the ticket price
     // 3. Check if the transaction is x confirmations
 
-    const order = await createOrder(eventId, itemId, senderAddress);
+    const order = await createOrder(
+      eventId,
+      itemId,
+      senderAddress,
+      displayName
+    );
     const ticket = await getTicketData(eventId, order.code);
 
     return new Response(JSON.stringify({ order, ticket }), {
