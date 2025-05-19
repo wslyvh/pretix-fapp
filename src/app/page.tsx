@@ -2,6 +2,13 @@ import { getEvents, getItems } from "@/clients/pretix";
 import { Events } from "@/components/events";
 import { Event } from "@/components/event";
 
+export async function generateMetadata() {
+  return {
+    title: "Pretix Farcaster App",
+    description: "Pretix Farcaster App",
+  };
+}
+
 export default async function Home() {
   const events = await getEvents();
 

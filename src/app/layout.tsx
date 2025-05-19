@@ -1,14 +1,8 @@
 import { PropsWithChildren } from "react";
-import { Metadata, Viewport } from "next";
-import { APP_DESCRIPTION, APP_NAME } from "@/utils/config";
+import { Viewport } from "next";
 import { Layout } from "@/components/layout";
 import { Providers } from "@/context";
 import "@/assets/globals.css";
-
-export const metadata: Metadata = {
-  title: APP_NAME,
-  description: APP_DESCRIPTION,
-};
 
 export const viewport: Viewport = {
   width: "device-width",
