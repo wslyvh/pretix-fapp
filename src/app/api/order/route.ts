@@ -1,5 +1,5 @@
 import { createPublicClient, http } from "viem";
-import { createOrder, getTicketData } from "@/clients/pretix";
+import { createOrder, getTicketData, getTicketPdf } from "@/clients/pretix";
 import { config } from "@/utils/wagmi";
 import { WALLET_RECIPIENT } from "@/utils/config";
 
@@ -7,6 +7,36 @@ const client = createPublicClient({
   chain: config.chains[0],
   transport: http(),
 });
+
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const eventId = searchParams.get("eventId");
+  const code = searchParams.get("code");
+  console.log("[GET] Get Ticket", eventId, code);
+
+  if (!eventId || !code) {
+    return new Response(
+      JSON.stringify({ error: "Missing required parameters" }),
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  // TODO: Validate the order // access
+  const pdf = await getTicketPdf(eventId, code);
+
+  console.log("Sending PDF");
+  return new Response(pdf, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `attachment; filename="ticket-${code}.pdf"`,
+      "Content-Length": pdf.byteLength.toString(),
+    },
+  });
+}
 
 export async function POST(req: Request) {
   try {
