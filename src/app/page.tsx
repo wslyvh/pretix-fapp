@@ -1,11 +1,19 @@
 import { getEvents, getItems } from "@/clients/pretix";
 import { Events } from "@/components/events";
 import { Event } from "@/components/event";
+import { Metadata } from "next";
+import { APP_URL } from "@/utils/config";
 
-export async function generateMetadata() {
+export function generateMetadata(): Metadata {
   return {
     title: "Pretix Farcaster App",
     description: "Pretix Farcaster App",
+    metadataBase: new URL(APP_URL),
+    openGraph: {
+      title: "Pretix Farcaster App",
+      description: "Pretix Farcaster App",
+      images: "/og.png",
+    },
   };
 }
 
