@@ -5,7 +5,7 @@ export const WALLET_RECIPIENT = "0x8289432ACD5EB0214B1C2526A5EDB480Aa06A9ab";
 export const APP_EMOJI = "🎟️";
 export const APP_NAME = "Pretix";
 export const APP_DESCRIPTION = "Buy Pretix tickets on Farcaster";
-export const APP_DOMAIN = "fapp.nexth.dev";
+export const APP_DOMAIN = "pretix-fapp.vercel.app";
 export const APP_URL = `https://${APP_DOMAIN}`;
 
 export const SOCIAL_TWITTER = "wslyvh";
