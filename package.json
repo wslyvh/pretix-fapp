@@ -11,7 +11,7 @@
     "pretix": "tsx src/scripts/index.ts"
   },
   "dependencies": {
-    "@farcaster/frame-sdk": "^0.0.41",
+    "@farcaster/frame-sdk": "^0.0.39",
     "@farcaster/frame-wagmi-connector": "^0.0.32",
     "@tanstack/react-query": "^5.76.1",
     "@upstash/redis": "^1.34.9",

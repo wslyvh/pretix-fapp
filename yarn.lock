@@ -285,21 +285,21 @@
     ethereum-cryptography "^2.0.0"
     micro-ftch "^0.3.1"
 
-"@farcaster/frame-core@0.0.36":
-  version "0.0.36"
-  resolved "https://registry.yarnpkg.com/@farcaster/frame-core/-/frame-core-0.0.36.tgz#e0f7c64c690c8edd1bf6231d7c30f378efb850a2"
-  integrity sha512-hEjCGSYSZDkXFJX9I42zXJDBYonIWjEVAj4rvlLFwZBa66Wd27AIIBgfeO9+qwWpYaQ+KHMh9UM7n3qDcmF61A==
+"@farcaster/frame-core@0.0.35":
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/@farcaster/frame-core/-/frame-core-0.0.35.tgz#62e546edc1f34ce77f1ccfa81a16fdad180cd5da"
+  integrity sha512-wJN3ShVx4lC4/1QeEJuzZDXZ39+1Oempfbv9AOxwCafU6Mhp5ATGvlAQrz69INa4pNnENqhocH0E6dywrTZFCQ==
   dependencies:
     "@solana/web3.js" "^1.98.2"
     ox "^0.4.4"
     zod "^3.24.1"
 
-"@farcaster/frame-sdk@^0.0.41":
-  version "0.0.41"
-  resolved "https://registry.yarnpkg.com/@farcaster/frame-sdk/-/frame-sdk-0.0.41.tgz#134d1b6028bdfc64085e025dd952c3b64c23ade1"
-  integrity sha512-JYIRFg2ikf2z96cVLXYTaZVrUDxWjzKVlq7Eq9bJVClkQxpAUl/sARwvokx8pQAcSl7nQiemeF0nE1qvn3ZBYQ==
+"@farcaster/frame-sdk@^0.0.39":
+  version "0.0.39"
+  resolved "https://registry.yarnpkg.com/@farcaster/frame-sdk/-/frame-sdk-0.0.39.tgz#201ca2f8973b19c8bd686f1273176a2c0842b4ff"
+  integrity sha512-v3cdsjM7J0DlqZiSuBaJ1dQSdUHH8co7DXx0JEPVP9IuD/1x4E8nitNYk/k9uHPxOx/WNoRbEnB9chLQVMDvcA==
   dependencies:
-    "@farcaster/frame-core" "0.0.36"
+    "@farcaster/frame-core" "0.0.35"
     comlink "^4.4.2"
     eventemitter3 "^5.0.1"
     ox "^0.4.4"
