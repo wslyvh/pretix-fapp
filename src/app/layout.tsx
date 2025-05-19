@@ -11,42 +11,8 @@ import { Providers } from "@/context";
 import "@/assets/globals.css";
 
 export const metadata: Metadata = {
-  applicationName: APP_NAME,
-  title: {
-    default: `${APP_NAME} · ${APP_DESCRIPTION}`,
-    template: `%s · ${APP_NAME}`,
-  },
-  metadataBase: new URL(APP_URL),
+  title: APP_NAME,
   description: APP_DESCRIPTION,
-  openGraph: {
-    type: "website",
-    title: APP_NAME,
-    siteName: APP_NAME,
-    description: APP_DESCRIPTION,
-    url: APP_URL,
-    images: "/og.png",
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: SOCIAL_TWITTER,
-    title: APP_NAME,
-    description: APP_DESCRIPTION,
-    images: "/og.png",
-  },
-  other: {
-    "fc:frame": JSON.stringify({
-      version: "next",
-      imageUrl: `${APP_URL}/image.png`,
-      button: {
-        title: `Launch ${APP_NAME}`,
-        action: {
-          type: "launch_frame",
-          name: APP_NAME,
-          url: APP_URL,
-        },
-      },
-    }),
-  },
 };
 
 export const viewport: Viewport = {
