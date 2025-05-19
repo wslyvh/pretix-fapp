@@ -1,11 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Metadata, Viewport } from "next";
-import {
-  APP_DESCRIPTION,
-  APP_NAME,
-  APP_URL,
-  SOCIAL_TWITTER,
-} from "@/utils/config";
+import { APP_DESCRIPTION, APP_NAME } from "@/utils/config";
 import { Layout } from "@/components/layout";
 import { Providers } from "@/context";
 import "@/assets/globals.css";
